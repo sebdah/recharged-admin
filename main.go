@@ -6,10 +6,10 @@ import (
 	"net/http"
 	"os"
 
-	"github.com/sebdah/recharged/admin/database"
-	"github.com/sebdah/recharged/admin/models"
-	"github.com/sebdah/recharged/admin/routers"
-	"github.com/sebdah/recharged/admin/settings"
+	"github.com/sebdah/recharged-admin/database"
+	"github.com/sebdah/recharged-admin/models"
+	"github.com/sebdah/recharged-admin/routers"
+	"github.com/sebdah/recharged-admin/settings"
 )
 
 func main() {

@@ -7,8 +7,8 @@ import (
 	"strings"
 
 	"github.com/gorilla/mux"
-	"github.com/sebdah/recharged/admin/database"
-	"github.com/sebdah/recharged/admin/models"
+	"github.com/sebdah/recharged-admin/database"
+	"github.com/sebdah/recharged-admin/models"
 	"gopkg.in/mgo.v2"
 	"gopkg.in/mgo.v2/bson"
 )

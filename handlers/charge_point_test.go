@@ -8,8 +8,8 @@ import (
 	"strings"
 	"testing"
 
-	"github.com/sebdah/recharged/admin/models"
-	"github.com/sebdah/recharged/admin/routers"
+	"github.com/sebdah/recharged-admin/models"
+	"github.com/sebdah/recharged-admin/routers"
 	"github.com/stretchr/testify/assert"
 )
 

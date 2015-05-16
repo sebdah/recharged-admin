@@ -4,7 +4,7 @@ import (
 	"testing"
 	"time"
 
-	"github.com/sebdah/recharged/central-system/types"
+	"github.com/sebdah/recharged-admin/types"
 	"github.com/stretchr/testify/assert"
 )
 

@@ -1,7 +1,7 @@
 package models
 
 import (
-	"github.com/sebdah/recharged/admin/database"
+	"github.com/sebdah/recharged-admin/database"
 	"gopkg.in/mgo.v2"
 	"gopkg.in/mgo.v2/bson"
 )

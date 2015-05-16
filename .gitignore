@@ -24,4 +24,4 @@ _testmain.go
 *.prof
 
 # Ignore the local main binary
-main
+recharged-admin

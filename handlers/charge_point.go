@@ -2,7 +2,6 @@ package handlers
 
 import (
 	"encoding/json"
-	"log"
 	"net/http"
 	"strings"
 
@@ -22,7 +21,7 @@ func getChargePoint(w http.ResponseWriter, r *http.Request) (chargePoint models.
 	// Check that the id is a valid hex ObjectId
 	if bson.IsObjectIdHex(id) == false {
 		http.NotFound(w, r)
-		log.Printf("Invalid ObjectId '%s'\n", id)
+		log.Debug("Invalid ObjectId '%s'\n", id)
 		return
 	}
 
@@ -30,11 +29,11 @@ func getChargePoint(w http.ResponseWriter, r *http.Request) (chargePoint models.
 	if err != nil {
 		if strings.Contains(err.Error(), "not found") == true {
 			http.NotFound(w, r)
-			log.Printf("ChargePoint '%s' not found\n", id)
+			log.Debug("Charge point '%s' not found\n", id)
 			return
 		} else {
 			http.Error(w, err.Error(), http.StatusInternalServerError)
-			log.Printf("Error querying MongoDB: %s\n", err.Error())
+			log.Error("Error querying MongoDB: %s\n", err.Error())
 			return
 		}
 	}
@@ -48,21 +47,21 @@ func ChargePointCreateHandler(w http.ResponseWriter, r *http.Request) {
 	decoder := json.NewDecoder(r.Body)
 	err := decoder.Decode(&chargePoint)
 	if err != nil {
-		log.Printf("Unable to parse request: %s", err)
+		log.Debug("Unable to parse request: %s", err)
 		w.WriteHeader(http.StatusBadRequest)
 		return
 	}
 
 	// Check that the model field is set
 	if chargePoint.Model == "" {
-		log.Printf("Missing model in request")
+		log.Debug("Missing model in request")
 		w.WriteHeader(http.StatusBadRequest)
 		return
 	}
 
 	// Check that the vendor field is set
 	if chargePoint.Vendor == "" {
-		log.Printf("Missing vendor in request")
+		log.Debug("Missing vendor in request")
 		w.WriteHeader(http.StatusBadRequest)
 		return
 	}
@@ -91,7 +90,7 @@ func ChargePointDeleteHandler(w http.ResponseWriter, r *http.Request) {
 	err := models.Delete(&chargePoint)
 	if err != nil {
 		w.WriteHeader(http.StatusInternalServerError)
-		log.Printf(
+		log.Error(
 			"Error deleting ChargePoint '%s'. Reason: %s\n",
 			chargePoint.Id.Hex(),
 			err.Error())
@@ -109,7 +108,7 @@ func ChargePointGetHandler(w http.ResponseWriter, r *http.Request) {
 	data, err := json.Marshal(chargePoint)
 	if err != nil {
 		http.Error(w, err.Error(), http.StatusInternalServerError)
-		log.Println("Error marshalling JSON: %s", err)
+		log.Debug("Error marshalling JSON: %s", err)
 		return
 	}
 
@@ -126,14 +125,14 @@ func ChargePointListHandler(w http.ResponseWriter, r *http.Request) {
 	err := collection.Find(bson.M{}).All(&chargePoints)
 	if err != nil {
 		http.Error(w, err.Error(), http.StatusInternalServerError)
-		log.Printf("Error querying MongoDB: %s", err)
+		log.Error("Error querying MongoDB: %s", err)
 		return
 	}
 
 	data, err := json.Marshal(chargePoints)
 	if err != nil {
 		http.Error(w, err.Error(), http.StatusInternalServerError)
-		log.Println("Error marshalling JSON: %s", err)
+		log.Debug("Error marshalling JSON: %s", err)
 		return
 	}
 
@@ -150,7 +149,7 @@ func ChargePointUpdateHandler(w http.ResponseWriter, r *http.Request) {
 	decoder := json.NewDecoder(r.Body)
 	err := decoder.Decode(&chargePoint)
 	if err != nil {
-		log.Printf("Unable to parse request")
+		log.Debug("Unable to parse request")
 		w.WriteHeader(http.StatusBadRequest)
 		return
 	}
@@ -182,7 +181,7 @@ func ChargePointValidationHandler(w http.ResponseWriter, r *http.Request) {
 	cnt, err := collection.Find(bson.M{"model": model, "vendor": vendor}).Count()
 	if err != nil {
 		http.Error(w, err.Error(), http.StatusInternalServerError)
-		log.Printf("Error querying MongoDB: %s\n", err.Error())
+		log.Error("Error querying MongoDB: %s\n", err.Error())
 		return
 	}
 

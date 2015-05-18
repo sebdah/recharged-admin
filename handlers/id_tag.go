@@ -2,7 +2,6 @@ package handlers
 
 import (
 	"encoding/json"
-	"log"
 	"net/http"
 	"strings"
 
@@ -26,7 +25,7 @@ func getIdTag(w http.ResponseWriter, r *http.Request) (idTag models.IdTag) {
 			return
 		} else {
 			http.Error(w, err.Error(), http.StatusInternalServerError)
-			log.Printf("Error querying MongoDB: %s\n", err.Error())
+			log.Error("Error querying MongoDB: %s\n", err.Error())
 			return
 		}
 	}
@@ -40,14 +39,14 @@ func IdTagCreateHandler(w http.ResponseWriter, r *http.Request) {
 	decoder := json.NewDecoder(r.Body)
 	err := decoder.Decode(&idTag)
 	if err != nil {
-		log.Printf("Unable to parse request: %s", err)
+		log.Debug("Unable to parse request: %s", err)
 		w.WriteHeader(http.StatusBadRequest)
 		return
 	}
 
 	// Check that the idTag field is set
 	if idTag.IdTag == "" {
-		log.Printf("Missing idTag in request")
+		log.Debug("Missing idTag in request")
 		w.WriteHeader(http.StatusBadRequest)
 		return
 	}
@@ -74,7 +73,7 @@ func IdTagDeleteHandler(w http.ResponseWriter, r *http.Request) {
 	err := models.Delete(&idTag)
 	if err != nil {
 		w.WriteHeader(http.StatusInternalServerError)
-		log.Printf("Error deleting IdTag %s", idTag.Id)
+		log.Error("Error deleting IdTag %s", idTag.Id)
 		return
 	}
 
@@ -89,7 +88,7 @@ func IdTagGetHandler(w http.ResponseWriter, r *http.Request) {
 	data, err := json.Marshal(idTag)
 	if err != nil {
 		http.Error(w, err.Error(), http.StatusInternalServerError)
-		log.Println("Error marshalling JSON: %s", err)
+		log.Debug("Error marshalling JSON: %s", err)
 		return
 	}
 
@@ -106,14 +105,14 @@ func IdTagListHandler(w http.ResponseWriter, r *http.Request) {
 	err := collection.Find(bson.M{}).All(&idTags)
 	if err != nil {
 		http.Error(w, err.Error(), http.StatusInternalServerError)
-		log.Printf("Error querying MongoDB: %s", err)
+		log.Error("Error querying MongoDB: %s", err)
 		return
 	}
 
 	data, err := json.Marshal(idTags)
 	if err != nil {
 		http.Error(w, err.Error(), http.StatusInternalServerError)
-		log.Println("Error marshalling JSON: %s", err)
+		log.Debug("Error marshalling JSON: %s", err)
 		return
 	}
 
@@ -130,7 +129,7 @@ func IdTagUpdateHandler(w http.ResponseWriter, r *http.Request) {
 	decoder := json.NewDecoder(r.Body)
 	err := decoder.Decode(&idTag)
 	if err != nil {
-		log.Printf("Unable to parse request")
+		log.Debug("Unable to parse request")
 		w.WriteHeader(http.StatusBadRequest)
 		return
 	}

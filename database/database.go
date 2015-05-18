@@ -1,7 +1,11 @@
 package database
 
 import (
+	"log"
+
 	"github.com/sebdah/recharged-admin/config"
+	"github.com/sebdah/recharged-admin/database"
+	"github.com/sebdah/recharged-admin/models"
 	"gopkg.in/mgo.v2"
 )
 
@@ -27,4 +31,22 @@ func GetDb() *mgo.Database {
 	}
 
 	return Session.DB(config.Config.GetString("mongodb.db"))
+}
+
+// Ensure databases
+func EnsureDatabases() {
+	if config.Env == "dev" {
+		log.Println("Ensuring databases")
+		database.CreateCollectionIdTags()
+		database.CreateCollectionChargePoints()
+	}
+}
+
+// Ensure indexes
+func EnsureIndexes() {
+	if config.Env == "dev" {
+		log.Println("Ensuring indexes")
+		models.EnsureIndexes(new(models.IdTag))
+		models.EnsureIndexes(new(models.ChargePoint))
+	}
 }

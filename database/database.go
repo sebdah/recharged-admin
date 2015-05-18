@@ -1,15 +1,15 @@
 package database
 
 import (
-	"log"
-
+	"github.com/op/go-logging"
 	"github.com/sebdah/recharged-admin/config"
-	"github.com/sebdah/recharged-admin/database"
-	"github.com/sebdah/recharged-admin/models"
 	"gopkg.in/mgo.v2"
 )
 
-var Session *mgo.Session
+var (
+	Session *mgo.Session
+	log     logging.Logger
+)
 
 // Connect to MongoDB
 func GetSession() *mgo.Session {
@@ -33,20 +33,11 @@ func GetDb() *mgo.Database {
 	return Session.DB(config.Config.GetString("mongodb.db"))
 }
 
-// Ensure databases
-func EnsureDatabases() {
+// Ensure all databases
+func EnsureAllDatabases() {
 	if config.Env == "dev" {
-		log.Println("Ensuring databases")
-		database.CreateCollectionIdTags()
-		database.CreateCollectionChargePoints()
-	}
-}
-
-// Ensure indexes
-func EnsureIndexes() {
-	if config.Env == "dev" {
-		log.Println("Ensuring indexes")
-		models.EnsureIndexes(new(models.IdTag))
-		models.EnsureIndexes(new(models.ChargePoint))
+		log.Info("Ensuring databases")
+		CreateCollectionIdTags()
+		CreateCollectionChargePoints()
 	}
 }

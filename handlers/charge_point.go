@@ -119,7 +119,7 @@ func ChargePointGetHandler(w http.ResponseWriter, r *http.Request) {
 	return
 }
 
-// List all ChargrPoints
+// List all ChargePoints
 func ChargePointListHandler(w http.ResponseWriter, r *http.Request) {
 	var chargePoints []models.ChargePoint
 	collection := database.GetCollectionChargePoints()

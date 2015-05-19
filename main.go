@@ -27,5 +27,5 @@ func main() {
 	models.EnsureAllIndexes()
 
 	log.Info("Starting webserver on port %d", config.Config.GetInt("port"))
-	http.ListenAndServe(fmt.Sprintf(":%d", config.Config.GetInt("port")), routers.Router())
+	http.ListenAndServe(fmt.Sprintf(":%d", config.Config.GetInt("port")), routers.HttpInterceptor(routers.Router()))
 }

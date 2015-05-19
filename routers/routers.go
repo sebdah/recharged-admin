@@ -1,9 +1,14 @@
 package routers
 
 import (
+	"net/http"
+
 	"github.com/gorilla/mux"
+	"github.com/op/go-logging"
 	"github.com/sebdah/recharged-admin/handlers"
 )
+
+var log logging.Logger
 
 func Router() *mux.Router {
 	router := mux.NewRouter()
@@ -57,4 +62,11 @@ func Router() *mux.Router {
 		HandlerFunc(handlers.ChargePointValidationHandler)
 
 	return router
+}
+
+func HttpInterceptor(router http.Handler) http.Handler {
+	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		router.ServeHTTP(w, r)
+		log.Debug("%s - %s %s", r.RemoteAddr, r.Method, r.URL)
+	})
 }

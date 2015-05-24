@@ -37,7 +37,8 @@ func GetDb() *mgo.Database {
 func EnsureAllDatabases() {
 	if config.Env == "dev" {
 		log.Info("Ensuring databases")
-		CreateCollectionIdTags()
+		CreateCollectionBootNotificationLog()
 		CreateCollectionChargePoints()
+		CreateCollectionIdTags()
 	}
 }

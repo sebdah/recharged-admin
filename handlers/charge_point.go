@@ -70,9 +70,11 @@ func ChargePointCreateHandler(w http.ResponseWriter, r *http.Request) {
 	if err != nil {
 		if mgo.IsDup(err) {
 			w.WriteHeader(http.StatusConflict)
+			log.Debug("ChargePoint already exists")
 			return
 		} else {
 			w.WriteHeader(http.StatusInternalServerError)
+			log.Error("Error in MongoDB communication: %s", err.Error())
 			return
 		}
 	}

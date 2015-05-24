@@ -21,7 +21,7 @@ func getChargePoint(w http.ResponseWriter, r *http.Request) (chargePoint models.
 	// Check that the id is a valid hex ObjectId
 	if bson.IsObjectIdHex(id) == false {
 		http.NotFound(w, r)
-		log.Debug("Invalid ObjectId '%s'\n", id)
+		log.Debug("Invalid ObjectId '%s'", id)
 		return
 	}
 
@@ -29,11 +29,11 @@ func getChargePoint(w http.ResponseWriter, r *http.Request) (chargePoint models.
 	if err != nil {
 		if strings.Contains(err.Error(), "not found") == true {
 			http.NotFound(w, r)
-			log.Debug("Charge point '%s' not found\n", id)
+			log.Debug("Charge point '%s' not found", id)
 			return
 		} else {
 			http.Error(w, err.Error(), http.StatusInternalServerError)
-			log.Error("Error querying MongoDB: %s\n", err.Error())
+			log.Error("Error querying MongoDB: %s", err.Error())
 			return
 		}
 	}
@@ -93,7 +93,7 @@ func ChargePointDeleteHandler(w http.ResponseWriter, r *http.Request) {
 	if err != nil {
 		w.WriteHeader(http.StatusInternalServerError)
 		log.Error(
-			"Error deleting ChargePoint '%s'. Reason: %s\n",
+			"Error deleting ChargePoint '%s'. Reason: %s",
 			chargePoint.Id.Hex(),
 			err.Error())
 		return
@@ -183,7 +183,7 @@ func ChargePointValidationHandler(w http.ResponseWriter, r *http.Request) {
 	cnt, err := collection.Find(bson.M{"model": model, "vendor": vendor}).Count()
 	if err != nil {
 		http.Error(w, err.Error(), http.StatusInternalServerError)
-		log.Error("Error querying MongoDB: %s\n", err.Error())
+		log.Error("Error querying MongoDB: %s", err.Error())
 		return
 	}
 

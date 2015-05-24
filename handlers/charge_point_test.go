@@ -17,7 +17,7 @@ var chargePointsBaseUrl string
 
 // Initializer
 func init() {
-	server = httptest.NewServer(routers.Router())
+	server := httptest.NewServer(routers.Router())
 	chargePointsBaseUrl = fmt.Sprintf("%s/chargepoints", server.URL)
 
 	// Prepare the database
@@ -29,7 +29,6 @@ func init() {
 // Helper create ChargePoint
 func createChargePoint(t *testing.T, body string) (res *http.Response, chargePoint *models.ChargePoint) {
 	reader := strings.NewReader(body)
-	fmt.Println(chargePointsBaseUrl)
 	r, err := http.NewRequest("POST", chargePointsBaseUrl, reader)
 	assert.Nil(t, err)
 	res, err = http.DefaultClient.Do(r)

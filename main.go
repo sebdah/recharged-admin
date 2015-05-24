@@ -23,6 +23,13 @@ func main() {
 	log.Info("Starting re:charged admin service")
 	log.Info("Environment: %s", config.Env)
 
+	// Drop databases if needed
+	if config.Env == "dev" {
+		models.DropCollection(new(models.BootNotificationLog))
+		models.DropCollection(new(models.ChargePoint))
+		models.DropCollection(new(models.IdTag))
+	}
+
 	// Create databases if needed
 	database.EnsureAllDatabases()
 	models.EnsureAllIndexes()

@@ -71,3 +71,29 @@ func TestCreateBootNotificationLogFull(t *testing.T) {
 	assert.Equal(t, "12344", bootNotificationLog.Imsi)
 	assert.NotNil(t, bootNotificationLog.Ts)
 }
+
+// Test basic bootNotificationLog fetching
+func TestGetBootNotificationLog(t *testing.T) {
+	// Create a boot notification log
+	fmt.Println("BootNotificationLog - TestGetBootNotificationLog")
+	input := `{"model": "Model A", "vendor": "Vendor B"}`
+	res, bootNotificationLog1 := createBootNotificationLog(t, input)
+	assert.Equal(t, 201, res.StatusCode)
+	assert.NotNil(t, bootNotificationLog1.Id)
+
+	// Fetch it
+	r, err := http.NewRequest("GET", bootNotificationLogBaseUrl+"/"+bootNotificationLog1.Id.Hex(), nil)
+	assert.Nil(t, err)
+	res, err = http.DefaultClient.Do(r)
+	assert.Nil(t, err)
+	assert.Equal(t, 200, res.StatusCode)
+
+	// Match the data
+	bootNotificationLog2 := new(models.BootNotificationLog)
+	decoder := json.NewDecoder(res.Body)
+	err = decoder.Decode(&bootNotificationLog2)
+	assert.Equal(t, bootNotificationLog1.Model, bootNotificationLog2.Model)
+	assert.Equal(t, bootNotificationLog1.Vendor, bootNotificationLog2.Vendor)
+	assert.Equal(t, bootNotificationLog1.SerialNumber, bootNotificationLog2.SerialNumber)
+	assert.Equal(t, bootNotificationLog1.Imsi, bootNotificationLog2.Imsi)
+}

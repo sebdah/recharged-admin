@@ -80,17 +80,3 @@ func HttpInterceptor(router http.Handler) http.Handler {
 		log.Debug("%s - %s %s", r.RemoteAddr, r.Method, r.URL)
 	})
 }
-	router.
-		Path("/bootnotificationlogs").
-		Methods("POST").
-		HandlerFunc(handlers.BootNotificationLogCreateHandler)
-
-	return router
-}
-
-func HttpInterceptor(router http.Handler) http.Handler {
-	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
-		router.ServeHTTP(w, r)
-		log.Debug("%s - %s %s", r.RemoteAddr, r.Method, r.URL)
-	})
-}

@@ -27,7 +27,7 @@ func NewBootNotificationLog() (bootNotificationLog *BootNotificationLog) {
 
 // Get the collection, satisfies the Modeller interface
 func (this *BootNotificationLog) Collection() *mgo.Collection {
-	return database.GetCollectionBootNotificationLog()
+	return database.GetCollectionBootNotificationLogs()
 }
 
 // Indexes, satisfies the Modeller interface

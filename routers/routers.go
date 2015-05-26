@@ -61,7 +61,7 @@ func Router() *mux.Router {
 		Methods("GET").
 		HandlerFunc(handlers.ChargePointValidationHandler)
 
-	// Routing for charge points
+	// Routing for boot notification logs
 	router.
 		Path("/bootnotificationlogs").
 		Methods("POST").

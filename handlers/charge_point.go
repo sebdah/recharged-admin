@@ -193,11 +193,12 @@ func ChargePointValidationHandler(w http.ResponseWriter, r *http.Request) {
 	}
 
 	if cnt >= 1 {
+		log.Debug("Found ChargePoint matching vendor:'%s' and model:'%s'", chargePoint.Vendor, chargePoint.Model)
 		w.WriteHeader(http.StatusOK)
 		return
 	}
 
-	w.WriteHeader(http.StatusNotFound)
 	log.Debug("No ChargePoint matching vendor:'%s' and model:'%s' found", chargePoint.Vendor, chargePoint.Model)
+	w.WriteHeader(http.StatusNotFound)
 	return
 }

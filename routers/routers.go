@@ -57,8 +57,8 @@ func Router() *mux.Router {
 		Methods("PUT").
 		HandlerFunc(handlers.ChargePointUpdateHandler)
 	router.
-		Path("/chargepoints/validate/{vendor}/{model}").
-		Methods("GET").
+		Path("/chargepoints/validate").
+		Methods("POST").
 		HandlerFunc(handlers.ChargePointValidationHandler)
 
 	// Routing for boot notification logs

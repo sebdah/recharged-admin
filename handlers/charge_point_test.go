@@ -292,7 +292,7 @@ func TestChargePointValidationOK(t *testing.T) {
 	assert.Equal(t, 201, res.StatusCode)
 
 	// See if it exists
-	r, err := http.NewRequest("GET", chargePointsBaseUrl+"/validate/vendor1/model1", nil)
+	r, err := http.NewRequest("POST", chargePointsBaseUrl+"/validate", strings.NewReader(body))
 	assert.Nil(t, err)
 	res, err = http.DefaultClient.Do(r)
 	assert.Nil(t, err)

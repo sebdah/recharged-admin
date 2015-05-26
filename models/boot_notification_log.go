@@ -4,14 +4,16 @@ import (
 	"time"
 
 	"github.com/sebdah/recharged-admin/database"
+	"github.com/sebdah/recharged-shared/types"
 	"gopkg.in/mgo.v2"
 	"gopkg.in/mgo.v2/bson"
 )
 
 type BootNotificationLog struct {
-	Id          bson.ObjectId `json:"id" bson:"_id,omitempty"`
-	ChargePoint ChargePoint   `json:"chargePoint"`
-	Ts          time.Time     `json:"ts"`
+	Id bson.ObjectId `json:"id" bson:"_id,omitempty"`
+	Ts time.Time     `json:"ts"`
+
+	*types.BootNotificationLog
 }
 
 // Constructor

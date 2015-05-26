@@ -198,5 +198,6 @@ func ChargePointValidationHandler(w http.ResponseWriter, r *http.Request) {
 	}
 
 	w.WriteHeader(http.StatusNotFound)
+	log.Debug("No ChargePoint matching vendor:'%s' and model:'%s' found", chargePoint.Vendor, chargePoint.Model)
 	return
 }

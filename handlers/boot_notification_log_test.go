@@ -47,28 +47,28 @@ func createBootNotificationLog(t *testing.T, body string) (res *http.Response, b
 // Test basic bootNotificationLog creation
 func TestCreateBootNotificationLogSimple(t *testing.T) {
 	fmt.Println("BootNotificationLog - TestCreateBootNotificationLogSimple")
-	input := `{"model": "Model X", "vendor": "Vendor Y"}`
+	input := `{"chargePoint": {"model": "Model X", "vendor": "Vendor Y"}}`
 	res, bootNotificationLog := createBootNotificationLog(t, input)
 	assert.Equal(t, 201, res.StatusCode)
 	assert.NotNil(t, bootNotificationLog.Id)
-	assert.Equal(t, "Model X", bootNotificationLog.Model)
-	assert.Equal(t, "Vendor Y", bootNotificationLog.Vendor)
-	assert.Equal(t, "", bootNotificationLog.SerialNumber)
-	assert.Equal(t, "", bootNotificationLog.Imsi)
+	assert.Equal(t, "Model X", bootNotificationLog.ChargePoint.Model)
+	assert.Equal(t, "Vendor Y", bootNotificationLog.ChargePoint.Vendor)
+	assert.Equal(t, "", bootNotificationLog.ChargePoint.SerialNumber)
+	assert.Equal(t, "", bootNotificationLog.ChargePoint.Imsi)
 	assert.NotNil(t, bootNotificationLog.Ts)
 }
 
 // Full test of the creation
 func TestCreateBootNotificationLogFull(t *testing.T) {
 	fmt.Println("BootNotificationLog - TestCreateBootNotificationLogFull")
-	input := `{"model": "Model X", "vendor": "Vendor Y", "serialNumber": "1234", "imsi": "12344"}`
+	input := `{"chargePoint": {"model": "Model X", "vendor": "Vendor Y", "serialNumber": "1234", "imsi": "12344"}}`
 	res, bootNotificationLog := createBootNotificationLog(t, input)
 	assert.Equal(t, 201, res.StatusCode)
 	assert.NotNil(t, bootNotificationLog.Id)
-	assert.Equal(t, "Model X", bootNotificationLog.Model)
-	assert.Equal(t, "Vendor Y", bootNotificationLog.Vendor)
-	assert.Equal(t, "1234", bootNotificationLog.SerialNumber)
-	assert.Equal(t, "12344", bootNotificationLog.Imsi)
+	assert.Equal(t, "Model X", bootNotificationLog.ChargePoint.Model)
+	assert.Equal(t, "Vendor Y", bootNotificationLog.ChargePoint.Vendor)
+	assert.Equal(t, "1234", bootNotificationLog.ChargePoint.SerialNumber)
+	assert.Equal(t, "12344", bootNotificationLog.ChargePoint.Imsi)
 	assert.NotNil(t, bootNotificationLog.Ts)
 }
 
@@ -76,7 +76,7 @@ func TestCreateBootNotificationLogFull(t *testing.T) {
 func TestGetBootNotificationLog(t *testing.T) {
 	// Create a boot notification log
 	fmt.Println("BootNotificationLog - TestGetBootNotificationLog")
-	input := `{"model": "Model A", "vendor": "Vendor B"}`
+	input := `{"chargePoint": {"model": "Model A", "vendor": "Vendor B"}}`
 	res, bootNotificationLog1 := createBootNotificationLog(t, input)
 	assert.Equal(t, 201, res.StatusCode)
 	assert.NotNil(t, bootNotificationLog1.Id)
@@ -92,8 +92,8 @@ func TestGetBootNotificationLog(t *testing.T) {
 	bootNotificationLog2 := new(models.BootNotificationLog)
 	decoder := json.NewDecoder(res.Body)
 	err = decoder.Decode(&bootNotificationLog2)
-	assert.Equal(t, bootNotificationLog1.Model, bootNotificationLog2.Model)
-	assert.Equal(t, bootNotificationLog1.Vendor, bootNotificationLog2.Vendor)
-	assert.Equal(t, bootNotificationLog1.SerialNumber, bootNotificationLog2.SerialNumber)
-	assert.Equal(t, bootNotificationLog1.Imsi, bootNotificationLog2.Imsi)
+	assert.Equal(t, bootNotificationLog1.ChargePoint.Model, bootNotificationLog2.ChargePoint.Model)
+	assert.Equal(t, bootNotificationLog1.ChargePoint.Vendor, bootNotificationLog2.ChargePoint.Vendor)
+	assert.Equal(t, bootNotificationLog1.ChargePoint.SerialNumber, bootNotificationLog2.ChargePoint.SerialNumber)
+	assert.Equal(t, bootNotificationLog1.ChargePoint.Imsi, bootNotificationLog2.ChargePoint.Imsi)
 }

@@ -24,13 +24,13 @@ func BootNotificationLogCreateHandler(w http.ResponseWriter, r *http.Request) {
 	}
 
 	// Check required fields
-	if bootNotificationLog.Model == "" {
-		log.Debug("Missing required field: model")
+	if bootNotificationLog.ChargePoint.Model == "" {
+		log.Debug("Missing required field: chargePoint.model")
 		w.WriteHeader(http.StatusBadRequest)
 		return
 	}
-	if bootNotificationLog.Vendor == "" {
-		log.Debug("Missing required field: vendor")
+	if bootNotificationLog.ChargePoint.Vendor == "" {
+		log.Debug("Missing required field: chargePoint.vendor")
 		w.WriteHeader(http.StatusBadRequest)
 		return
 	}

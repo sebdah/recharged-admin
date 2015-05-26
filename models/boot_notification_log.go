@@ -9,12 +9,9 @@ import (
 )
 
 type BootNotificationLog struct {
-	Id           bson.ObjectId `json:"id" bson:"_id,omitempty"`
-	Vendor       string        `json:"vendor"`
-	Model        string        `json:"model"`
-	SerialNumber string        `json:"serialNumber"`
-	Imsi         string        `json:"imsi"`
-	Ts           time.Time     `json:"ts"`
+	Id          bson.ObjectId `json:"id" bson:"_id,omitempty"`
+	ChargePoint ChargePoint   `json:"chargePoint"`
+	Ts          time.Time     `json:"ts"`
 }
 
 // Constructor
